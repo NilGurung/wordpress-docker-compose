@@ -7,8 +7,8 @@ services:
       - 80:80 # change ip if required
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
-      - ./wp-app:/var/www/html # Full wordpress project
-      - ./plugin:/var/www/html/wp-content/plugins/caldera-forms # Plugin development
+      #- ./wp-app:/var/www/html # Full wordpress project
+      - ./plugin:/home/ubuntu/jenkins/workspace/workspace/wordpress/wp-content/plugins # Plugin development
      # - ./theme:/var/www/html/wp-content/themes/ # Theme development
     environment:
       WORDPRESS_DB_HOST: db
@@ -45,7 +45,7 @@ services:
     image: mysql:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
     volumes:
       - ./db:/docker-entrypoint-initdb.d
-      - db_data:/var/lib/mysql
+    #  - db_data:/var/lib/mysql
     restart: always
     ports:
       - 3306:3306 # change ip if required
@@ -58,5 +58,5 @@ services:
       MYSQL_DATABASE: "${DB_NAME}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
 
-volumes:
-  db_data:
+#volumes:
+ # db_data:
