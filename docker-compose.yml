@@ -9,7 +9,7 @@ services:
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
       - ./wp-app:/var/www/html # Full wordpress project
-      - ./plugin:/home/ubuntu/jenkins/workspace/workspace/wordpress/wp-content/plugins/caldera-forms # Plugin development
+      - ./plugin:/var/www/html/wp-content/plugins/caldera-forms # Plugin development
       #- ./plugin-name/trunk/:/var/www/html/wp-content/plugins/plugin-name # Plugin development
       #- ./theme-name/trunk/:/var/www/html/wp-content/themes/theme-name # Theme development
     environment:
