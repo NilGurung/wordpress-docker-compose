@@ -47,8 +47,7 @@ services:
     image: mysql:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
     volumes:
       - ./db_data/jobstart_dev.sql:/docker-entrypoint-initdb.d/jobstart_dev.sql
-      - db_data:
-        /var/lib/mysql
+      - db_data:/var/lib/mysql
     restart: always
     ports:
       - 3306:3306 # change ip if required
