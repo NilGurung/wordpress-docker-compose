@@ -14,9 +14,9 @@ services:
       #- ./theme-name/trunk/:/var/www/html/wp-content/themes/theme-name # Theme development
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_NAME: "${DB_NAME}"
+      WORDPRESS_DB_NAME: jobstart
       WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD: "${DB_ROOT_PASSWORD}"
+      WORDPRESS_DB_PASSWORD: password
     depends_on:
       - db
     links:
@@ -37,7 +37,7 @@ services:
       # https://docs.phpmyadmin.net/en/latest/setup.html#docker-environment-variables
       PMA_HOST: db
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: password
     ports:
       - 8080:80
     restart: always
@@ -58,8 +58,9 @@ services:
       - ./wp-data:/docker-entrypoint-initdb.d
       - db_data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: "${DB_NAME}"
-      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: jobstart
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password
 
 volumes:
   db_data:
