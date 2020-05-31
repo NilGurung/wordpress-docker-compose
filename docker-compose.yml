@@ -12,9 +12,9 @@ services:
      # - ./theme:/var/www/html/wp-content/themes/ # Theme development
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_NAME: "${DB_NAME}"
-      WORDPRESS_DB_USER: "${DB_USER}"
-      WORDPRESS_DB_PASSWORD: "${DB_ROOT_PASSWORD}"
+      WORDPRESS_DB_NAME: jobstart_dev
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
     depends_on:
       - db
     links:
@@ -35,13 +35,15 @@ services:
       # https://docs.phpmyadmin.net/en/latest/setup.html#docker-environment-variables
       PMA_HOST: db
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: wordpress
     ports:
       - 8080:80
     links:
       - db:db
 
   db:
+    build:
+      context: .
     image: mysql:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
     volumes:
       - ./db_data:/docker-entrypoint-initdb.d
@@ -55,8 +57,10 @@ services:
         '--collation-server=utf8mb4_unicode_ci'
     ]
     environment:
-      MYSQL_DATABASE: "${DB_NAME}"
-      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: jobstart_dev
+      MYSQL_USER: wordpress
+      MYSQL_PASWWORD: wrodpress
+      MYSQL_ROOT_PASSWORD: wordpress
 
 volumes:
  db_data:
