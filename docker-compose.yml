@@ -4,12 +4,13 @@ services:
   wp:
     image: wordpress:latest # https://hub.docker.com/_/wordpress/
     ports:
-      - 80:80 # change ip if required re
+      - 80:80 # change ip if required
     volumes:
       - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
-      #- ./wp-app:/var/www/html # Full wordpress project
+      - ./wp-app:/var/www/html # Full wordpress project
       - ./plugin:/home/ubuntu/jenkins/workspace/workspace/wordpress/wp-content/plugins/caldera-forms # Plugin development
-     # - ./theme:/var/www/html/wp-content/themes/ # Theme development
+      #- ./plugin-name/trunk/:/var/www/html/wp-content/plugins/plugin-name # Plugin development
+      #- ./theme-name/trunk/:/var/www/html/wp-content/themes/theme-name # Theme development
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_NAME: "${DB_NAME}"
@@ -43,10 +44,6 @@ services:
 
   db:
     image: mysql:latest # https://hub.docker.com/_/mysql/ - or mariadb https://hub.docker.com/_/mariadb
-    volumes:
-      - ./wp-data:/docker-entrypoint-initdb.d
-      - db_data:/var/lib/mysql
-    restart: always
     ports:
       - 3306:3306 # change ip if required
     command: [
@@ -54,10 +51,12 @@ services:
         '--character-set-server=utf8mb4',
         '--collation-server=utf8mb4_unicode_ci'
     ]
+    volumes:
+      - ./wp-data:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: "${DB_NAME}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
-      MYSQL_PASWWORD: "${DB_ROOT_PASSWORD}"
 
 volumes:
- db_data:
+  db_data:
