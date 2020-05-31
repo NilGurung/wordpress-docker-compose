@@ -12,9 +12,9 @@ services:
      # - ./theme:/var/www/html/wp-content/themes/ # Theme development
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_NAME: jobstart_dev
+      WORDPRESS_DB_NAME: "${DB_NAME}"
       WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD: passwrod
+      WORDPRESS_DB_PASSWORD: "${DB_ROOT_PASSWORD}"
     depends_on:
       - db
     links:
@@ -35,7 +35,7 @@ services:
       # https://docs.phpmyadmin.net/en/latest/setup.html#docker-environment-variables
       PMA_HOST: db
       PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
     ports:
       - 8080:80
     links:
@@ -55,10 +55,9 @@ services:
         '--collation-server=utf8mb4_unicode_ci'
     ]
     environment:
-      MYSQL_DATABASE: jobstart_dev
-      MYSQL_USER: root
-      MYSQL_PASWWORD: password
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_PASWWORD: "${DB_ROOT_PASSWORD}"
 
 volumes:
  db_data:
